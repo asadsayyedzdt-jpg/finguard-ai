@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinGuard AI - Compliance Automation</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>FinGuard AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-tab="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="#" class="nav-link" data-tab="kyc">
+                    <i class="fas fa-id-card"></i> KYC Verification
+                </a>
+                <a href="#" class="nav-link" data-tab="aml">
+                    <i class="fas fa-money-check-alt"></i> AML Check
+                </a>
+                <a href="#" class="nav-link" data-tab="chat">
+                    <i class="fas fa-comments"></i> AI Assistant
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- ============================================ -->
+        <!-- TAB 1: DASHBOARD -->
+        <!-- ============================================ -->
+        <div id="dashboard-tab" class="tab-content active">
+            <h1 class="page-title">Compliance Dashboard</h1>
+            
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-transactions">0</h3>
+                        <p>Total Transactions</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="flagged-transactions">0</h3>
+                        <p>Flagged Transactions</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon yellow">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="open-alerts">0</h3>
+                        <p>Open Alerts</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-volume">₹0</h3>
+                        <p>Total Volume</p>
+                    </div>
+                </div>
+            </div>
+<!-- In the dashboard tab, after the stats grid -->
+<div style="margin: 2rem 0;">
+    <button onclick="generateReport()" class="btn btn-primary">
+        <i class="fas fa-file-pdf"></i> Generate Compliance Report
+    </button>
+</div>
+            <!-- Recent Transactions and Alerts -->
+            <div class="dashboard-grid">
+                <!-- Recent Transactions -->
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-history"></i> Recent Transactions
+                    </h2>
+                    <div id="recent-transactions" class="table-container">
+                        <p class="loading">Loading...</p>
+                    </div>
+                </div>
+
+                <!-- Recent Alerts -->
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-bell"></i> Recent Alerts
+                    </h2>
+                    <div id="recent-alerts" class="alerts-container">
+                        <p class="loading">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+<!-- TAB 2: KYC VERIFICATION (ENHANCED WITH OCR) -->
+<!-- ============================================ -->
+<div id="kyc-tab" class="tab-content">
+    <h1 class="page-title">KYC Document Verification</h1>
+    
+    <div class="form-container">
+        <!-- Method Selection -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-id-card"></i> Choose Verification Method
+            </h2>
+            
+            <div class="method-selector">
+                <button class="method-btn active" data-method="ocr">
+                    <i class="fas fa-camera"></i>
+                    <span>Upload Document Image</span>
+                    <small>Automatic text extraction (OCR)</small>
+                </button>
+                <button class="method-btn" data-method="manual">
+                    <i class="fas fa-keyboard"></i>
+                    <span>Manual Entry</span>
+                    <small>Type document details</small>
+                </button>
+            </div>
+        </div>
+        
+       <!-- OCR Method (Enhanced with Face Verification) -->
+<div class="card" id="ocr-method">
+    <h2 class="card-title">
+        <i class="fas fa-upload"></i> Document Verification with Face Match
+    </h2>
+    
+    <!-- Step Indicator -->
+    <div class="steps-indicator">
+        <div class="step active" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-label">Upload Document</div>
+        </div>
+        <div class="step" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-label">Upload Selfie</div>
+        </div>
+        <div class="step" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-label">Verification</div>
+        </div>
+    </div>
+    
+    <!-- Step 1: Document Upload -->
+    <div class="verification-step" id="step-1" style="display: block;">
+        <h3><i class="fas fa-id-card"></i> Step 1: Upload Document</h3>
+        <form id="ocr-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="doc-type-ocr">Document Type</label>
+                <select id="doc-type-ocr" required>
+                    <option value="auto">Auto-Detect</option>
+                    <option value="pan">PAN Card</option>
+                    <option value="aadhaar">Aadhaar Card</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="document-file">Document Image</label>
+                <div class="file-upload-area" id="file-upload-area">
+                    <input type="file" id="document-file" accept="image/*" required hidden>
+                    <div class="upload-placeholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload or drag and drop</p>
+                        <small>Supported: JPG, PNG, BMP (Max 16MB)</small>
+                    </div>
+                    <div class="file-preview" id="file-preview" style="display: none;">
+                        <img id="preview-image" src="" alt="Preview">
+                        <button type="button" class="remove-file-btn" id="remove-file-btn">
+                            <i class="fas fa-times"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i> Next: Upload Selfie
+            </button>
+        </form>
+    </div>
+    
+    <!-- Step 2: Selfie Upload -->
+    <div class="verification-step" id="step-2" style="display: none;">
+        <h3><i class="fas fa-camera"></i> Step 2: Upload Selfie</h3>
+        <p style="color: #6b7280; margin-bottom: 1rem;">
+            Upload a recent selfie to verify your identity matches the document photo
+        </p>
+        
+        <form id="selfie-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="selfie-file">Selfie Image</label>
+                <div class="file-upload-area" id="selfie-upload-area">
+                    <input type="file" id="selfie-file" accept="image/*" required hidden>
+                    <div class="upload-placeholder">
+                        <i class="fas fa-user-circle"></i>
+                        <p>Click to upload selfie</p>
+                        <small>Clear, front-facing photo recommended</small>
+                    </div>
+                    <div class="file-preview" id="selfie-preview" style="display: none;">
+                        <img id="selfie-preview-image" src="" alt="Selfie Preview">
+                        <button type="button" class="remove-file-btn" id="remove-selfie-btn">
+                            <i class="fas fa-times"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem;">
+                <button type="button" class="btn" style="background: #6b7280;" onclick="goToStep(1)">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button type="submit" class="btn btn-primary" style="flex: 1;">
+                    <i class="fas fa-check-circle"></i> Verify Identity
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Step 3: Results -->
+    <div class="verification-step" id="step-3" style="display: none;">
+        <h3><i class="fas fa-check-circle"></i> Step 3: Verification Complete</h3>
+        <div id="combined-results"></div>
+        
+        <button type="button" class="btn btn-primary" onclick="resetVerification()">
+            <i class="fas fa-redo"></i> Verify Another Document
+        </button>
+    </div>
+</div>
+        
+        <!-- Manual Method (Hidden by default) -->
+        <div class="card" id="manual-method" style="display: none;">
+            <h2 class="card-title">
+                <i class="fas fa-keyboard"></i> Manual Document Entry
+            </h2>
+            
+            <form id="kyc-form">
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" placeholder="Enter full name as per document" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="doc-type">Document Type</label>
+                    <select id="doc-type" required>
+                        <option value="">Select document type</option>
+                        <option value="PAN">PAN Card</option>
+                        <option value="AADHAAR">Aadhaar Card</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="doc-number">Document Number</label>
+                    <input type="text" id="doc-number" placeholder="Enter document number" required>
+                    <small class="form-hint">
+                        PAN: ABCDE1234F | Aadhaar: 1234 5678 9012
+                    </small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check-circle"></i> Verify Document
+                </button>
+            </form>
+        </div>
+
+        <!-- Result Display -->
+        <div id="kyc-result" class="result-container" style="display: none;">
+            <div class="result-header">
+                <i class="fas fa-check-circle"></i>
+                <h3>Verification Result</h3>
+            </div>
+            <div id="kyc-result-content"></div>
+        </div>
+    </div>
+</div>
+        <!-- ============================================ -->
+        <!-- TAB 3: AML TRANSACTION CHECK -->
+        <!-- ============================================ -->
+        <div id="aml-tab" class="tab-content">
+            <h1 class="page-title">AML Transaction Monitor</h1>
+            
+            <div class="form-container">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-money-check-alt"></i> Check Transaction Risk
+                    </h2>
+                    
+                    <form id="aml-form">
+                        <div class="form-group">
+                            <label for="user-id">User ID</label>
+                            <input type="text" id="user-id" placeholder="e.g., user001" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amount">Transaction Amount (₹)</label>
+                            <input type="number" id="amount" placeholder="Enter amount" min="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipient">Recipient ID</label>
+                            <input type="text" id="recipient" placeholder="e.g., recipient001" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" placeholder="Payment description (optional)">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Analyze Transaction
+                        </button>
+                    </form>
+
+                    <!-- Result Display -->
+                    <div id="aml-result" class="result-container" style="display: none;">
+                        <div class="result-header">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Risk Analysis</h3>
+                        </div>
+                        <div id="aml-result-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 4: AI CHATBOT -->
+        <!-- ============================================ -->
+        <div id="chat-tab" class="tab-content">
+            <h1 class="page-title">AI Compliance Assistant</h1>
+            
+            <div class="chat-container">
+                <div class="card chat-card">
+                    <div class="chat-header">
+                        <i class="fas fa-robot"></i>
+                        <span>FinGuard AI Assistant</span>
+                        <span class="status-dot"></span>
+                    </div>
+
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm your FinGuard AI assistant. I can help you with:</p>
+                                <ul>
+                                    <li>Transaction statistics</li>
+                                    <li>Risk alerts and compliance rules</li>
+                                    <li>Threshold information</li>
+                                </ul>
+                                <p>Try asking: "How many transactions?" or "Show risky transactions"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="chat-form" class="chat-input">
+                        <input type="text" id="chat-message" placeholder="Ask me anything about compliance..." required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Questions</h3>
+                    <button class="quick-btn" data-question="How many transactions?">
+                        <i class="fas fa-question-circle"></i> How many transactions?
+                    </button>
+                    <button class="quick-btn" data-question="Show risky transactions">
+                        <i class="fas fa-exclamation-triangle"></i> Show risky transactions
+                    </button>
+                    <button class="quick-btn" data-question="What are the thresholds?">
+                        <i class="fas fa-chart-line"></i> What are the thresholds?
+                    </button>
+                    <button class="quick-btn" data-question="Help">
+                        <i class="fas fa-info-circle"></i> Help
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+</body>
+</html>

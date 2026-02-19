@@ -1,0 +1,76 @@
+{
+    "transactions": [
+      {
+        "id": "TXN000001",
+        "user_id": "user001",
+        "amount": 150000,
+        "recipient": "recipient001",
+        "description": "Business payment",
+        "timestamp": "2024-01-15T10:30:00",
+        "risk_score": 35,
+        "risk_level": "MEDIUM",
+        "is_flagged": false
+      },
+      {
+        "id": "TXN000002",
+        "user_id": "user002",
+        "amount": 48000,
+        "recipient": "recipient002",
+        "description": "Invoice payment",
+        "timestamp": "2024-01-15T14:20:00",
+        "risk_score": 25,
+        "risk_level": "LOW",
+        "is_flagged": false
+      },
+      {
+        "id": "TXN000003",
+        "user_id": "user001",
+        "amount": 350000,
+        "recipient": "recipient003",
+        "description": "Property deal",
+        "timestamp": "2024-01-15T16:45:00",
+        "risk_score": 65,
+        "risk_level": "HIGH",
+        "is_flagged": true
+      },
+      {
+        "id": "TXN000004",
+        "user_id": "user003",
+        "amount": 49500,
+        "recipient": "recipient004",
+        "description": "Payment",
+        "timestamp": "2024-01-15T23:15:00",
+        "risk_score": 55,
+        "risk_level": "MEDIUM",
+        "is_flagged": true
+      },
+      {
+        "id": "TXN000005",
+        "user_id": "user003",
+        "amount": 49800,
+        "recipient": "recipient005",
+        "description": "Transfer",
+        "timestamp": "2024-01-15T23:45:00",
+        "risk_score": 75,
+        "risk_level": "HIGH",
+        "is_flagged": true
+      }
+    ],
+    "users": {
+      "user001": {
+        "name": "Rajesh Kumar",
+        "email": "rajesh@example.com",
+        "risk_score": 45
+      },
+      "user002": {
+        "name": "Priya Sharma",
+        "email": "priya@example.com",
+        "risk_score": 20
+      },
+      "user003": {
+        "name": "Amit Patel",
+        "email": "amit@example.com",
+        "risk_score": 68
+      }
+    }
+  }
