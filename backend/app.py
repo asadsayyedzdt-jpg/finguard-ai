@@ -21,6 +21,7 @@ from audit_service import AuditService
 from database_service import DatabaseService
 from websocket_service import WebSocketService
 from config import settings
+
 # Create Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = settings.SECRET_KEY
@@ -834,4 +835,4 @@ if __name__ == '__main__':
     
     # Use socketio.run instead of app.run for WebSocket support
     ws_service.socketio.run(app, debug=True, host='127.0.0.1', port=5000)
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    # app.run(debug=True, host='127.0.0.1', port=5000)

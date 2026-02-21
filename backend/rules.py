@@ -4,6 +4,8 @@ Simple and easy to understand!
 """
 
 from datetime import datetime, timedelta
+from typing import Dict, List, Tuple, Optional
+
 
 class AMLRules:
     """
